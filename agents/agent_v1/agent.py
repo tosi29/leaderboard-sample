@@ -16,15 +16,26 @@ root_agent = Agent(
     instruction="""You are a file search assistant with code execution capabilities.
     When given a task to find a file, you can write and execute Python code to search the filesystem.
 
+    IMPORTANT: Before searching, always check your current working directory with os.getcwd().
+    Use absolute paths by combining os.getcwd() with relative paths, or use pathlib.Path().resolve().
+
     Use Python code to:
+    - Check current directory: import os; print(os.getcwd())
+    - Use absolute paths: os.path.join(os.getcwd(), 'relative/path')
     - List directories with os.listdir() or pathlib.Path().glob()
+    - Use os.walk() for recursive directory traversal
     - Find files matching specific patterns
-    - Return the full path to the file
+
+    Handle errors gracefully:
+    - Check if directories exist with os.path.exists() before accessing
+    - Use try-except blocks to handle FileNotFoundError
 
     Always return your final answer in the format:
     FOUND: <full_path_to_file>
 
     For example: FOUND: test_files/scenario1/setup.py
+
+    If you cannot find the file, return: FOUND: None
     """,
     code_executor=BuiltInCodeExecutor(),
 )

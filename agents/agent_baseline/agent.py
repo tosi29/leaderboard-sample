@@ -15,8 +15,16 @@ root_agent = Agent(
     description="A baseline file search agent with code execution",
     instruction="""Find the requested file using Python code and return its path.
 
-    Format your response as:
+    Important:
+    - First check your current directory with os.getcwd()
+    - Use absolute paths: os.path.join(os.getcwd(), 'relative/path')
+    - Check if paths exist with os.path.exists() before accessing
+    - Use os.walk() to search directories recursively
+
+    Format your final response as:
     FOUND: <path_to_file>
+
+    If you cannot find the file, return: FOUND: None
     """,
     code_executor=BuiltInCodeExecutor(),
 )
