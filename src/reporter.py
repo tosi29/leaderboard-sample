@@ -258,16 +258,8 @@ HTML_TEMPLATE = """
                                 <div class="metric-value accuracy">{{ "%.1f"|format(agent.accuracy) }}%</div>
                             </div>
                             <div class="metric">
-                                <div class="metric-label">Correct</div>
-                                <div class="metric-value correct">{{ agent.correct }}</div>
-                            </div>
-                            <div class="metric">
-                                <div class="metric-label">Incorrect</div>
-                                <div class="metric-value incorrect">{{ agent.incorrect }}</div>
-                            </div>
-                            <div class="metric">
-                                <div class="metric-label">Total Tasks</div>
-                                <div class="metric-value">{{ agent.total }}</div>
+                                <div class="metric-label">Average Time</div>
+                                <div class="metric-value">{{ "%.2f"|format(agent.average_time) }}s</div>
                             </div>
                         </div>
 
@@ -346,16 +338,23 @@ def generate_report(results_file: str = "results/benchmark_results.json",
 
         # Collect task details
         tasks = []
+        total_execution_time = 0
         for task_id, task_info in agent_info.get("tasks", {}).items():
+            execution_time = task_info.get("execution_time", 0)
+            total_execution_time += execution_time
             tasks.append({
                 "name": task_info.get("task_name", task_id),
                 "correct": task_info.get("correct", False),
-                "execution_time": task_info.get("execution_time", 0),
+                "execution_time": execution_time,
             })
+
+        # Calculate average execution time
+        average_time = (total_execution_time / total) if total > 0 else 0
 
         agents_data.append({
             "name": agent_name,
             "accuracy": accuracy,
+            "average_time": average_time,
             "correct": correct,
             "incorrect": incorrect,
             "total": total,
