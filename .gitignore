@@ -45,7 +45,7 @@ env/
 Thumbs.db
 
 # Results
-results/*.json
+# results/*.json
 
 # Logs
 *.log
