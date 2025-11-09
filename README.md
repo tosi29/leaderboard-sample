@@ -57,7 +57,12 @@ uv sync
 ```
 
 3. Set Google AI API Key
+```bash
+export "GOOGLE_API_KEY=your_api_key_here"
+```
 
+
+or Use direnv.
 ```bash
 echo "GOOGLE_API_KEY=your_api_key_here" > .env
 ```
