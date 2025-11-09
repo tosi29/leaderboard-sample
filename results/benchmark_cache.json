@@ -136,6 +136,346 @@
       "timestamp": "2025-11-09 19:20:30",
       "agent_file": "agents/agent_baseline",
       "task_name": "\u56e0\u6570\u5206\u89e3\uff0810\u6841\uff09"
+    },
+    "with_code_executor__task_001": {
+      "agent_hash": "01abdf29b1687999935d6cc5bf98a0b00ace7792a7eb3a4c2d44fcde1ca6217d",
+      "benchmark_hash": "c3a29136209bb546ffe07ed7624bd7ea1d2b89932de91af55b8581637a73ccfb",
+      "result": {
+        "task_id": "task_001",
+        "task_name": "\u7c21\u5358\u306a\u8a08\u7b97",
+        "correct": true,
+        "execution_time": 3.7989649772644043,
+        "agent_output": "26\n26",
+        "expected_answer": "26",
+        "token_count": null,
+        "error": null
+      },
+      "timestamp": "2025-11-09 19:36:24",
+      "agent_file": "agents/with_code_executor",
+      "task_name": "\u7c21\u5358\u306a\u8a08\u7b97"
+    },
+    "with_code_executor__task_002": {
+      "agent_hash": "01abdf29b1687999935d6cc5bf98a0b00ace7792a7eb3a4c2d44fcde1ca6217d",
+      "benchmark_hash": "9a1e84294aa87ddc87373b19b0602e943057d48ae3c99a6a3aa1cb78c20b2b18",
+      "result": {
+        "task_id": "task_002",
+        "task_name": "\u3084\u3084\u8907\u96d1\u306a\u8a08\u7b97",
+        "correct": false,
+        "execution_time": 0.9187259674072266,
+        "agent_output": "1494533110739",
+        "expected_answer": "149462580267",
+        "token_count": null,
+        "error": null
+      },
+      "timestamp": "2025-11-09 19:36:24",
+      "agent_file": "agents/with_code_executor",
+      "task_name": "\u3084\u3084\u8907\u96d1\u306a\u8a08\u7b97"
+    },
+    "with_code_executor__task_003": {
+      "agent_hash": "01abdf29b1687999935d6cc5bf98a0b00ace7792a7eb3a4c2d44fcde1ca6217d",
+      "benchmark_hash": "d3b122871b0f97b798550e3481ca8f438ee88a1de0d322636f324bf81329a549",
+      "result": {
+        "task_id": "task_003",
+        "task_name": "\u56e0\u6570\u5206\u89e3\uff083\u6841\uff09",
+        "correct": true,
+        "execution_time": 5.9340949058532715,
+        "agent_output": "sorted_factors=[23, 43]\n23,43",
+        "expected_answer": "23,43",
+        "token_count": null,
+        "error": null
+      },
+      "timestamp": "2025-11-09 19:36:24",
+      "agent_file": "agents/with_code_executor",
+      "task_name": "\u56e0\u6570\u5206\u89e3\uff083\u6841\uff09"
+    },
+    "with_code_executor__task_004": {
+      "agent_hash": "01abdf29b1687999935d6cc5bf98a0b00ace7792a7eb3a4c2d44fcde1ca6217d",
+      "benchmark_hash": "3bb8ad826149a8de619c6603e21dd5bd10bf767620fab8013178c046627a99e1",
+      "result": {
+        "task_id": "task_004",
+        "task_name": "\u56e0\u6570\u5206\u89e3\uff0810\u6841\uff09",
+        "correct": false,
+        "execution_time": 1.6228387355804443,
+        "agent_output": "`tool_code\nimport sympy\n\nn = 484228009\nfactors = sympy.factorint(n)\nsorted_factors = sorted([p**k for p, k in factors.items() for _ in range(k)])\nprint(f'{sorted_factors=}')",
+        "expected_answer": "15077,32117",
+        "token_count": null,
+        "error": null
+      },
+      "timestamp": "2025-11-09 19:36:24",
+      "agent_file": "agents/with_code_executor",
+      "task_name": "\u56e0\u6570\u5206\u89e3\uff0810\u6841\uff09"
+    },
+    "baseline__task_001": {
+      "agent_hash": "689c3e1b5a33d56d5914349ac3116e4f61515a5ae3ef50e494288484d06ac19d",
+      "benchmark_hash": "c3a29136209bb546ffe07ed7624bd7ea1d2b89932de91af55b8581637a73ccfb",
+      "result": {
+        "task_id": "task_001",
+        "task_name": "\u7c21\u5358\u306a\u8a08\u7b97",
+        "correct": true,
+        "execution_time": 1.040632963180542,
+        "agent_output": "26",
+        "expected_answer": "26",
+        "token_count": null,
+        "error": null
+      },
+      "timestamp": "2025-11-09 19:36:24",
+      "agent_file": "agents/baseline",
+      "task_name": "\u7c21\u5358\u306a\u8a08\u7b97"
+    },
+    "baseline__task_002": {
+      "agent_hash": "689c3e1b5a33d56d5914349ac3116e4f61515a5ae3ef50e494288484d06ac19d",
+      "benchmark_hash": "9a1e84294aa87ddc87373b19b0602e943057d48ae3c99a6a3aa1cb78c20b2b18",
+      "result": {
+        "task_id": "task_002",
+        "task_name": "\u3084\u3084\u8907\u96d1\u306a\u8a08\u7b97",
+        "correct": false,
+        "execution_time": 1.0032823085784912,
+        "agent_output": "149470459476",
+        "expected_answer": "149462580267",
+        "token_count": null,
+        "error": null
+      },
+      "timestamp": "2025-11-09 19:36:24",
+      "agent_file": "agents/baseline",
+      "task_name": "\u3084\u3084\u8907\u96d1\u306a\u8a08\u7b97"
+    },
+    "baseline__task_003": {
+      "agent_hash": "689c3e1b5a33d56d5914349ac3116e4f61515a5ae3ef50e494288484d06ac19d",
+      "benchmark_hash": "d3b122871b0f97b798550e3481ca8f438ee88a1de0d322636f324bf81329a549",
+      "result": {
+        "task_id": "task_003",
+        "task_name": "\u56e0\u6570\u5206\u89e3\uff083\u6841\uff09",
+        "correct": false,
+        "execution_time": 0.9307470321655273,
+        "agent_output": "2, 13, 37",
+        "expected_answer": "23,43",
+        "token_count": null,
+        "error": null
+      },
+      "timestamp": "2025-11-09 19:36:24",
+      "agent_file": "agents/baseline",
+      "task_name": "\u56e0\u6570\u5206\u89e3\uff083\u6841\uff09"
+    },
+    "baseline__task_004": {
+      "agent_hash": "689c3e1b5a33d56d5914349ac3116e4f61515a5ae3ef50e494288484d06ac19d",
+      "benchmark_hash": "3bb8ad826149a8de619c6603e21dd5bd10bf767620fab8013178c046627a99e1",
+      "result": {
+        "task_id": "task_004",
+        "task_name": "\u56e0\u6570\u5206\u89e3\uff0810\u6841\uff09",
+        "correct": false,
+        "execution_time": 1.1368448734283447,
+        "agent_output": "2, 2, 11, 13, 71, 101",
+        "expected_answer": "15077,32117",
+        "token_count": null,
+        "error": null
+      },
+      "timestamp": "2025-11-09 19:36:24",
+      "agent_file": "agents/baseline",
+      "task_name": "\u56e0\u6570\u5206\u89e3\uff0810\u6841\uff09"
+    },
+    "with_google_search__task_001": {
+      "agent_hash": "7c74b92cb4263f561919941fa34cd623e58cd1ed3970442e8a3931128c2b8ed4",
+      "benchmark_hash": "c3a29136209bb546ffe07ed7624bd7ea1d2b89932de91af55b8581637a73ccfb",
+      "result": {
+        "task_id": "task_001",
+        "task_name": "\u7c21\u5358\u306a\u8a08\u7b97",
+        "correct": true,
+        "execution_time": 3.3537049293518066,
+        "agent_output": "26",
+        "expected_answer": "26",
+        "token_count": null,
+        "error": null
+      },
+      "timestamp": "2025-11-09 19:42:14",
+      "agent_file": "agents/with_google_search",
+      "task_name": "\u7c21\u5358\u306a\u8a08\u7b97"
+    },
+    "with_google_search__task_002": {
+      "agent_hash": "7c74b92cb4263f561919941fa34cd623e58cd1ed3970442e8a3931128c2b8ed4",
+      "benchmark_hash": "9a1e84294aa87ddc87373b19b0602e943057d48ae3c99a6a3aa1cb78c20b2b18",
+      "result": {
+        "task_id": "task_002",
+        "task_name": "\u3084\u3084\u8907\u96d1\u306a\u8a08\u7b97",
+        "correct": false,
+        "execution_time": 2.0454041957855225,
+        "agent_output": "1213929 * 123123 = 149499435167",
+        "expected_answer": "149462580267",
+        "token_count": null,
+        "error": null
+      },
+      "timestamp": "2025-11-09 19:42:14",
+      "agent_file": "agents/with_google_search",
+      "task_name": "\u3084\u3084\u8907\u96d1\u306a\u8a08\u7b97"
+    },
+    "with_google_search__task_003": {
+      "agent_hash": "7c74b92cb4263f561919941fa34cd623e58cd1ed3970442e8a3931128c2b8ed4",
+      "benchmark_hash": "d3b122871b0f97b798550e3481ca8f438ee88a1de0d322636f324bf81329a549",
+      "result": {
+        "task_id": "task_003",
+        "task_name": "\u56e0\u6570\u5206\u89e3\uff083\u6841\uff09",
+        "correct": false,
+        "execution_time": 2.3515431880950928,
+        "agent_output": "989\u306e\u7d20\u56e0\u6570\u5206\u89e3\u306f23 \u00d7 43\u3067\u3059\u3002\u3057\u305f\u304c\u3063\u3066\u3001989\u3092\u5c0f\u3055\u3044\u9806\u306b\u30b3\u30f3\u30de\u533a\u5207\u308a\u3067\u56e0\u6570\u5206\u89e3\u3059\u308b\u3068\u300123, 43\u3068\u306a\u308a\u307e\u3059\u3002",
+        "expected_answer": "23,43",
+        "token_count": null,
+        "error": null
+      },
+      "timestamp": "2025-11-09 19:42:14",
+      "agent_file": "agents/with_google_search",
+      "task_name": "\u56e0\u6570\u5206\u89e3\uff083\u6841\uff09"
+    },
+    "with_google_search__task_004": {
+      "agent_hash": "7c74b92cb4263f561919941fa34cd623e58cd1ed3970442e8a3931128c2b8ed4",
+      "benchmark_hash": "3bb8ad826149a8de619c6603e21dd5bd10bf767620fab8013178c046627a99e1",
+      "result": {
+        "task_id": "task_004",
+        "task_name": "\u56e0\u6570\u5206\u89e3\uff0810\u6841\uff09",
+        "correct": false,
+        "execution_time": 1.9554932117462158,
+        "agent_output": "484228009\u3092\u7d20\u56e0\u6570\u5206\u89e3\u3059\u308b\u3068\u3001\u4ee5\u4e0b\u306e\u3088\u3046\u306b\u306a\u308a\u307e\u3059\u3002\n\n3, 13, 113, 1038797\n\n\u3053\u308c\u306f\u3001484228009 = 3 \u00d7 13 \u00d7 113 \u00d7 1038797 \u3068\u8868\u3055\u308c\u307e\u3059\u3002",
+        "expected_answer": "15077,32117",
+        "token_count": null,
+        "error": null
+      },
+      "timestamp": "2025-11-09 19:42:14",
+      "agent_file": "agents/with_google_search",
+      "task_name": "\u56e0\u6570\u5206\u89e3\uff0810\u6841\uff09"
+    },
+    "gemini_2_5_pro__task_001": {
+      "agent_hash": "3a5afa9749a98a3e810e357dbd2cdeed9bf9126c4cc940870661f797d30ee6a9",
+      "benchmark_hash": "c3a29136209bb546ffe07ed7624bd7ea1d2b89932de91af55b8581637a73ccfb",
+      "result": {
+        "task_id": "task_001",
+        "task_name": "\u7c21\u5358\u306a\u8a08\u7b97",
+        "correct": true,
+        "execution_time": 3.4432568550109863,
+        "agent_output": "26",
+        "expected_answer": "26",
+        "token_count": null,
+        "error": null
+      },
+      "timestamp": "2025-11-09 19:30:43",
+      "agent_file": "agents/gemini_2_5_pro",
+      "task_name": "\u7c21\u5358\u306a\u8a08\u7b97"
+    },
+    "gemini_2_5_pro__task_002": {
+      "agent_hash": "3a5afa9749a98a3e810e357dbd2cdeed9bf9126c4cc940870661f797d30ee6a9",
+      "benchmark_hash": "9a1e84294aa87ddc87373b19b0602e943057d48ae3c99a6a3aa1cb78c20b2b18",
+      "result": {
+        "task_id": "task_002",
+        "task_name": "\u3084\u3084\u8907\u96d1\u306a\u8a08\u7b97",
+        "correct": false,
+        "execution_time": 4.263758897781372,
+        "agent_output": "149463564567",
+        "expected_answer": "149462580267",
+        "token_count": null,
+        "error": null
+      },
+      "timestamp": "2025-11-09 19:30:43",
+      "agent_file": "agents/gemini_2_5_pro",
+      "task_name": "\u3084\u3084\u8907\u96d1\u306a\u8a08\u7b97"
+    },
+    "gemini_2_5_pro__task_003": {
+      "agent_hash": "3a5afa9749a98a3e810e357dbd2cdeed9bf9126c4cc940870661f797d30ee6a9",
+      "benchmark_hash": "d3b122871b0f97b798550e3481ca8f438ee88a1de0d322636f324bf81329a549",
+      "result": {
+        "task_id": "task_003",
+        "task_name": "\u56e0\u6570\u5206\u89e3\uff083\u6841\uff09",
+        "correct": false,
+        "execution_time": 0.5363681316375732,
+        "agent_output": "",
+        "expected_answer": "23,43",
+        "token_count": null,
+        "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'The model is overloaded. Please try again later.', 'status': 'UNAVAILABLE'}}"
+      },
+      "timestamp": "2025-11-09 19:30:43",
+      "agent_file": "agents/gemini_2_5_pro",
+      "task_name": "\u56e0\u6570\u5206\u89e3\uff083\u6841\uff09"
+    },
+    "gemini_2_5_pro__task_004": {
+      "agent_hash": "3a5afa9749a98a3e810e357dbd2cdeed9bf9126c4cc940870661f797d30ee6a9",
+      "benchmark_hash": "3bb8ad826149a8de619c6603e21dd5bd10bf767620fab8013178c046627a99e1",
+      "result": {
+        "task_id": "task_004",
+        "task_name": "\u56e0\u6570\u5206\u89e3\uff0810\u6841\uff09",
+        "correct": false,
+        "execution_time": 0.27959179878234863,
+        "agent_output": "",
+        "expected_answer": "15077,32117",
+        "token_count": null,
+        "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 2\\nPlease retry in 24.84045501s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerMinutePerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-pro'}, 'quotaValue': '2'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '24s'}]}}"
+      },
+      "timestamp": "2025-11-09 19:30:43",
+      "agent_file": "agents/gemini_2_5_pro",
+      "task_name": "\u56e0\u6570\u5206\u89e3\uff0810\u6841\uff09"
+    },
+    "gemini_2_5_flash__task_001": {
+      "agent_hash": "0120490b21cb3f9942ddd0b076e908a4c27316fac81919c21a27d88a2ba98977",
+      "benchmark_hash": "c3a29136209bb546ffe07ed7624bd7ea1d2b89932de91af55b8581637a73ccfb",
+      "result": {
+        "task_id": "task_001",
+        "task_name": "\u7c21\u5358\u306a\u8a08\u7b97",
+        "correct": true,
+        "execution_time": 3.70190691947937,
+        "agent_output": "26",
+        "expected_answer": "26",
+        "token_count": null,
+        "error": null
+      },
+      "timestamp": "2025-11-09 19:39:13",
+      "agent_file": "agents/gemini_2_5_flash",
+      "task_name": "\u7c21\u5358\u306a\u8a08\u7b97"
+    },
+    "gemini_2_5_flash__task_002": {
+      "agent_hash": "0120490b21cb3f9942ddd0b076e908a4c27316fac81919c21a27d88a2ba98977",
+      "benchmark_hash": "9a1e84294aa87ddc87373b19b0602e943057d48ae3c99a6a3aa1cb78c20b2b18",
+      "result": {
+        "task_id": "task_002",
+        "task_name": "\u3084\u3084\u8907\u96d1\u306a\u8a08\u7b97",
+        "correct": false,
+        "execution_time": 1.6310369968414307,
+        "agent_output": "149463994787",
+        "expected_answer": "149462580267",
+        "token_count": null,
+        "error": null
+      },
+      "timestamp": "2025-11-09 19:39:13",
+      "agent_file": "agents/gemini_2_5_flash",
+      "task_name": "\u3084\u3084\u8907\u96d1\u306a\u8a08\u7b97"
+    },
+    "gemini_2_5_flash__task_003": {
+      "agent_hash": "0120490b21cb3f9942ddd0b076e908a4c27316fac81919c21a27d88a2ba98977",
+      "benchmark_hash": "d3b122871b0f97b798550e3481ca8f438ee88a1de0d322636f324bf81329a549",
+      "result": {
+        "task_id": "task_003",
+        "task_name": "\u56e0\u6570\u5206\u89e3\uff083\u6841\uff09",
+        "correct": true,
+        "execution_time": 2.9682259559631348,
+        "agent_output": "23,43",
+        "expected_answer": "23,43",
+        "token_count": null,
+        "error": null
+      },
+      "timestamp": "2025-11-09 19:39:13",
+      "agent_file": "agents/gemini_2_5_flash",
+      "task_name": "\u56e0\u6570\u5206\u89e3\uff083\u6841\uff09"
+    },
+    "gemini_2_5_flash__task_004": {
+      "agent_hash": "0120490b21cb3f9942ddd0b076e908a4c27316fac81919c21a27d88a2ba98977",
+      "benchmark_hash": "3bb8ad826149a8de619c6603e21dd5bd10bf767620fab8013178c046627a99e1",
+      "result": {
+        "task_id": "task_004",
+        "task_name": "\u56e0\u6570\u5206\u89e3\uff0810\u6841\uff09",
+        "correct": false,
+        "execution_time": 59.29835510253906,
+        "agent_output": "484228009\u306f\u7d20\u6570\u3067\u3059\u3002\u3057\u305f\u304c\u3063\u3066\u3001\u305d\u306e\u56e0\u6570\u306f\u81ea\u5206\u81ea\u8eab\u306e\u307f\u3067\u3059\u3002\n\n\u56de\u7b54\u306f\u6570\u5b57\u306e\u5c0f\u3055\u3044\u9806\u306b\u30b3\u30f3\u30de\u533a\u5207\u308a\u3067\u3068\u306e\u3053\u3068\u3067\u3059\u306e\u3067\u3001\u4ee5\u4e0b\u306e\u3088\u3046\u306b\u306a\u308a\u307e\u3059\u3002\n\n484228009",
+        "expected_answer": "15077,32117",
+        "token_count": null,
+        "error": null
+      },
+      "timestamp": "2025-11-09 19:39:13",
+      "agent_file": "agents/gemini_2_5_flash",
+      "task_name": "\u56e0\u6570\u5206\u89e3\uff0810\u6841\uff09"
     }
   }
 }
