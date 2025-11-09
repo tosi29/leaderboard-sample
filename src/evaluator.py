@@ -89,13 +89,6 @@ def evaluate_result(agent_output: str, expected_answer: str, execution_success: 
             "reason": "Agent produced no output",
         }
 
-    # For file path tasks, check if paths match
-    if paths_match(agent_output, expected_answer):
-        return {
-            "correct": True,
-            "reason": "Path matches expected answer",
-        }
-
     # Check if the expected answer appears anywhere in the output
     if expected_answer.lower() in agent_output.lower():
         return {
