@@ -91,8 +91,7 @@ Create task definitions in the `benchmarks/` directory.
   "name": "Task name",
   "description": "Task description",
   "query": "Query for the agent",
-  "expected_answer": "Expected answer",
-  "test_directory": "test_files/scenario1"
+  "expected_answer": "Expected answer"
 }
 ```
 
