@@ -8,3 +8,32 @@ dependencies = [
     "google-adk>=1.17.0",
     "jinja2>=3.1.6",
 ]
+
+[dependency-groups]
+dev = [
+    "pre-commit>=3.7.1",
+    "ruff>=0.6.4",
+]
+
+[tool.ruff]
+# Enforce a 100-character maximum line length so Ruff's formatter and linter
+# align with the project's preferred code width.
+line-length = 100
+target-version = "py311"
+src = [
+    "src",
+    "agents",
+]
+extend-exclude = [
+    "docs",
+]
+
+[tool.ruff.lint]
+# Enable pycodestyle errors (E), Pyflakes checks (F), and isort-style import
+# sorting (I) rule categories to keep the codebase consistent.
+select = [
+    "E",
+    "F",
+    "I",
+]
+
