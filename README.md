@@ -226,7 +226,7 @@ jobs:
 
 Currently supported:
 
-- Correct/Incorrect (file path matching)
+- Correct/Incorrect (case-insensitive substring matching against the expected answer)
 - Execution time
 - Token count (placeholder, to be implemented)
 
