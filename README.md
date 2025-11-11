@@ -65,7 +65,14 @@ cd leadersboard-sample
 uv sync
 ```
 
-3. Set Google AI API Key
+3. (Optional) Install development tooling and enable commit hooks
+
+```bash
+uv sync --group dev
+pre-commit install
+```
+
+4. Set Google AI API Key
 ```bash
 export "GOOGLE_API_KEY=your_api_key_here"
 ```
