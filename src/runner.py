@@ -1,12 +1,20 @@
 """Benchmark runner - Executes agents against benchmark tasks"""
 
+import argparse
+import asyncio
+import importlib.util
 import json
 import os
+import sys
 import time
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
+from google.adk.runners import InMemoryRunner
+from google.genai import types
+
 from services.cache_manager import CacheManager
+from services.evaluator import evaluate_result
 
 
 class BenchmarkRunner:
@@ -74,14 +82,6 @@ class BenchmarkRunner:
         agent_name = agent_path.name
 
         try:
-            # Import required modules
-            import asyncio
-            import importlib.util
-            import sys
-
-            from google.adk.runners import InMemoryRunner
-            from google.genai import types
-
             # Add the agent directory to sys.path temporarily
             agent_dir_str = str(agent_path.absolute())
             if agent_dir_str not in sys.path:
@@ -278,8 +278,6 @@ class BenchmarkRunner:
                     run_result = self.run_agent(agent_path, benchmark["query"])
 
                     # Evaluate the result (this will be enhanced by evaluator.py)
-                    from services.evaluator import evaluate_result
-
                     evaluation = evaluate_result(
                         run_result["output"], benchmark["expected_answer"], run_result["success"]
                     )
@@ -338,8 +336,6 @@ class BenchmarkRunner:
 
 def main():
     """Main entry point for the benchmark runner"""
-    import argparse
-
     parser = argparse.ArgumentParser(description="Run AI agent benchmarks")
     parser.add_argument(
         "--ignore-cache",
