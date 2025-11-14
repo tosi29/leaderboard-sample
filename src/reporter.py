@@ -56,25 +56,49 @@ def generate_report(
         # Collect task details
         tasks = []
         total_execution_time = 0
+        total_input_tokens = 0
+        total_output_tokens = 0
+        counted_input_tasks = 0
+        counted_output_tasks = 0
         for task_id, task_info in agent_info.get("tasks", {}).items():
             execution_time = task_info.get("execution_time", 0)
             total_execution_time += execution_time
+            input_tokens = task_info.get("input_tokens")
+            output_tokens = task_info.get("output_tokens")
+
+            if input_tokens is not None:
+                total_input_tokens += input_tokens
+                counted_input_tasks += 1
+            if output_tokens is not None:
+                total_output_tokens += output_tokens
+                counted_output_tasks += 1
+
             tasks.append(
                 {
                     "name": task_info.get("task_name", task_id),
                     "correct": task_info.get("correct", False),
                     "execution_time": execution_time,
+                    "input_tokens": input_tokens,
+                    "output_tokens": output_tokens,
                 }
             )
 
         # Calculate average execution time
         average_time = (total_execution_time / total) if total > 0 else 0
+        average_input_tokens = (
+            total_input_tokens / counted_input_tasks if counted_input_tasks > 0 else 0
+        )
+        average_output_tokens = (
+            total_output_tokens / counted_output_tasks if counted_output_tasks > 0 else 0
+        )
 
         agents_data.append(
             {
                 "name": agent_name,
                 "accuracy": accuracy,
                 "average_time": average_time,
+                "average_input_tokens": average_input_tokens,
+                "average_output_tokens": average_output_tokens,
                 "correct": correct,
                 "incorrect": incorrect,
                 "total": total,

@@ -154,6 +154,10 @@
             color: #f5576c;
         }
 
+        .metric-value.tokens {
+            color: #ffb347;
+        }
+
         .task-details {
             margin-top: 2rem;
         }
@@ -260,6 +264,18 @@
                                     {{ "%.2f"|format(agent.average_time) }}s
                                 </div>
                             </div>
+                            <div class="metric">
+                                <div class="metric-label">Avg Input Tokens</div>
+                                <div class="metric-value tokens">
+                                    {{ "%.1f"|format(agent.average_input_tokens) }}
+                                </div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-label">Avg Output Tokens</div>
+                                <div class="metric-value tokens">
+                                    {{ "%.1f"|format(agent.average_output_tokens) }}
+                                </div>
+                            </div>
                         </div>
 
                         <div class="task-details">
@@ -270,6 +286,8 @@
                                         <th>Task</th>
                                         <th>Status</th>
                                         <th>Time (s)</th>
+                                        <th>Input Tokens</th>
+                                        <th>Output Tokens</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -284,6 +302,8 @@
                                             </span>
                                         </td>
                                         <td>{{ "%.2f"|format(task.execution_time) }}</td>
+                                        <td>{{ task.input_tokens if task.input_tokens is not none else "—" }}</td>
+                                        <td>{{ task.output_tokens if task.output_tokens is not none else "—" }}</td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>
