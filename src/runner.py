@@ -33,11 +33,7 @@ class BenchmarkRunner:
         """
         # Get all directories in agents/ that contain an agent.py file
         agents = sorted(
-            [
-                d
-                for d in self.agents_dir.iterdir()
-                if d.is_dir() and (d / "agent.py").exists()
-            ],
+            [d for d in self.agents_dir.iterdir() if d.is_dir() and (d / "agent.py").exists()],
             key=lambda path: path.name,
         )
         if not agents:
@@ -50,9 +46,7 @@ class BenchmarkRunner:
         if selected_agent not in agents_by_name:
             available = ", ".join(sorted(agents_by_name.keys()))
             raise ValueError(
-                "Unknown agent: "
-                + selected_agent
-                + f". Available agents: {available}"
+                "Unknown agent: " + selected_agent + f". Available agents: {available}"
             )
 
         return [agents_by_name[selected_agent]]
@@ -61,7 +55,7 @@ class BenchmarkRunner:
         """Load all benchmark task definitions"""
         benchmarks = []
         for task_file in sorted(self.benchmarks_dir.glob("*.json")):
-            with open(task_file, 'r') as f:
+            with open(task_file, "r") as f:
                 benchmarks.append(json.load(f))
         if not benchmarks:
             raise ValueError(f"No benchmark files found in {self.benchmarks_dir}")
@@ -131,29 +125,45 @@ class BenchmarkRunner:
                     # Collect all responses including code execution results
                     response_parts = []
                     debug_info = []
+                    prompt_tokens = 0
+                    candidates_tokens = 0
 
                     async for event in events:
                         # Debug: track event types
                         event_type = type(event).__name__
                         debug_info.append(f"Event: {event_type}")
 
-                        if hasattr(event, 'content') and event.content:
+                        usage_metadata = getattr(event, "usage_metadata", None)
+                        if usage_metadata:
+                            event_prompt_tokens = getattr(
+                                usage_metadata, "prompt_token_count", None
+                            )
+                            if event_prompt_tokens:
+                                prompt_tokens += event_prompt_tokens
+
+                            event_candidates_tokens = getattr(
+                                usage_metadata, "candidates_token_count", None
+                            )
+                            if event_candidates_tokens:
+                                candidates_tokens += event_candidates_tokens
+
+                        if hasattr(event, "content") and event.content:
                             if isinstance(event.content, str):
                                 response_parts.append(event.content)
                                 debug_info.append("  - Added string content")
-                            elif hasattr(event.content, 'parts'):
+                            elif hasattr(event.content, "parts"):
                                 for i, part in enumerate(event.content.parts):
                                     part_type = type(part).__name__
                                     debug_info.append(f"  - Part {i}: {part_type}")
 
                                     # Extract text from all part types
-                                    if hasattr(part, 'text') and part.text:
+                                    if hasattr(part, "text") and part.text:
                                         response_parts.append(part.text)
                                         debug_info.append(f"    Added text: {part.text[:50]}...")
                                     # Extract output from code execution results
-                                    elif hasattr(part, 'code_execution_result'):
+                                    elif hasattr(part, "code_execution_result"):
                                         result = part.code_execution_result
-                                        if hasattr(result, 'output') and result.output:
+                                        if hasattr(result, "output") and result.output:
                                             response_parts.append(result.output)
                                             truncated_output = result.output[:50]
                                             debug_info.append(
@@ -161,13 +171,18 @@ class BenchmarkRunner:
                                             )
 
                     # Print debug info if VERBOSE env var is set
-                    if os.environ.get('VERBOSE'):
+                    if os.environ.get("VERBOSE"):
                         print("\n".join(debug_info))
 
-                    return "".join(response_parts)
+                    token_usage = {
+                        "prompt_token_count": prompt_tokens,
+                        "candidates_token_count": candidates_tokens,
+                    }
+
+                    return "".join(response_parts), token_usage
 
                 # Run the async function
-                response = asyncio.run(run_agent_async())
+                response, token_usage = asyncio.run(run_agent_async())
 
                 execution_time = time.time() - start_time
 
@@ -177,6 +192,8 @@ class BenchmarkRunner:
                     "execution_time": execution_time,
                     "success": True,
                     "returncode": 0,
+                    "input_tokens": token_usage.get("prompt_token_count"),
+                    "output_tokens": token_usage.get("candidates_token_count"),
                 }
             finally:
                 # Remove from sys.path
@@ -190,6 +207,8 @@ class BenchmarkRunner:
                 "execution_time": execution_time,
                 "success": False,
                 "error": str(e),
+                "input_tokens": None,
+                "output_tokens": None,
             }
 
     def run_all(
@@ -231,7 +250,7 @@ class BenchmarkRunner:
                     "correct": 0,
                     "incorrect": 0,
                     "errors": 0,
-                }
+                },
             }
 
             for benchmark in benchmarks:
@@ -248,9 +267,7 @@ class BenchmarkRunner:
                     task_result = cached_result
                     cache_hits += 1
                     print(" [CACHED]")
-                    cached_status = (
-                        "✓ CORRECT" if task_result["correct"] else "✗ INCORRECT"
-                    )
+                    cached_status = "✓ CORRECT" if task_result["correct"] else "✗ INCORRECT"
                     cached_duration = task_result["execution_time"]
                     print(f"    Result: {cached_status} ({cached_duration:.2f}s)")
                 else:
@@ -260,10 +277,9 @@ class BenchmarkRunner:
 
                     # Evaluate the result (this will be enhanced by evaluator.py)
                     from evaluator import evaluate_result
+
                     evaluation = evaluate_result(
-                        run_result["output"],
-                        benchmark["expected_answer"],
-                        run_result["success"]
+                        run_result["output"], benchmark["expected_answer"], run_result["success"]
                     )
 
                     # Store the result
@@ -274,17 +290,15 @@ class BenchmarkRunner:
                         "execution_time": run_result["execution_time"],
                         "agent_output": run_result["output"][:500],  # Truncate for storage
                         "expected_answer": benchmark["expected_answer"],
-                        "token_count": None,  # Placeholder for future implementation
+                        "input_tokens": run_result.get("input_tokens"),
+                        "output_tokens": run_result.get("output_tokens"),
                         "error": run_result.get("error"),
                     }
 
                     # Cache the result
                     if self.use_cache:
                         self.cache_manager.cache_result(
-                            agent_path,
-                            benchmark,
-                            task_result,
-                            results["timestamp"]
+                            agent_path, benchmark, task_result, results["timestamp"]
                         )
 
                     cache_misses += 1
@@ -308,7 +322,7 @@ class BenchmarkRunner:
         output_path = Path(output_file)
         output_path.parent.mkdir(parents=True, exist_ok=True)
 
-        with open(output_path, 'w') as f:
+        with open(output_path, "w") as f:
             json.dump(results, f, indent=2)
 
         print(f"\nResults saved to {output_file}")
@@ -320,9 +334,7 @@ class BenchmarkRunner:
             cache_hit_rate = (cache_hits / total_tests) * 100 if total_tests else 0.0
             cache_miss_rate = (cache_misses / total_tests) * 100 if total_tests else 0.0
             print(f"  Cache hits: {cache_hits}/{total_tests} ({cache_hit_rate:.1f}%)")
-            print(
-                f"  New executions: {cache_misses}/{total_tests} ({cache_miss_rate:.1f}%)"
-            )
+            print(f"  New executions: {cache_misses}/{total_tests} ({cache_miss_rate:.1f}%)")
 
         return results
 
@@ -335,17 +347,12 @@ def main():
     parser.add_argument(
         "--no-cache",
         action="store_true",
-        help="Disable caching and run all tests (default: use cache)"
+        help="Disable caching and run all tests (default: use cache)",
     )
     parser.add_argument(
-        "--clear-cache",
-        action="store_true",
-        help="Clear cache before running tests"
+        "--clear-cache", action="store_true", help="Clear cache before running tests"
     )
-    parser.add_argument(
-        "--agent",
-        help="Optional agent directory name to run (default: all)"
-    )
+    parser.add_argument("--agent", help="Optional agent directory name to run (default: all)")
     args = parser.parse_args()
 
     use_cache = not args.no_cache
@@ -360,9 +367,9 @@ def main():
     results = runner.run_all(selected_agent=args.agent)
 
     # Print summary
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("BENCHMARK SUMMARY")
-    print("="*60)
+    print("=" * 60)
 
     for agent_name, agent_data in results["agents"].items():
         summary = agent_data["summary"]
