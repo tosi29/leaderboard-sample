@@ -64,7 +64,11 @@ class BenchmarkRunner:
         benchmarks = []
         for task_file in sorted(self.benchmarks_dir.glob("*.json")):
             with open(task_file, "r") as f:
-                benchmarks.append(json.load(f))
+                benchmark = json.load(f)
+
+            # Derive an id from the filename when it is not explicitly provided.
+            benchmark.setdefault("id", task_file.stem)
+            benchmarks.append(benchmark)
         if not benchmarks:
             raise ValueError(f"No benchmark files found in {self.benchmarks_dir}")
         return benchmarks

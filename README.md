@@ -109,13 +109,14 @@ Create task definitions in the `benchmarks/` directory.
 
 ```json
 {
-  "id": "task_003",
   "name": "Task name",
   "description": "Task description",
   "query": "Query for the agent",
   "expected_answer": "Expected answer"
 }
 ```
+
+Each task automatically uses its filename (without the `.json` extension) as the identifier, so you can omit the `id` field unless you need a custom value.
 
 ### 3. Run benchmarks
 
