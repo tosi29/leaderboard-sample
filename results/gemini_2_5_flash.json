@@ -57,17 +57,17 @@
       "task_name": "因数分解（10桁）",
       "agent_hash": "33d83158d390717385a7b51640618f1b15c01d17ef04b2bdbdfa6e3888cb0779",
       "benchmark_hash": "3bb8ad826149a8de619c6603e21dd5bd10bf767620fab8013178c046627a99e1",
-      "timestamp": "2025-11-15 01:26:19",
+      "timestamp": "2025-11-15 01:50:08",
       "result": {
         "task_id": "task_004",
         "task_name": "因数分解（10桁）",
         "correct": false,
-        "execution_time": 5.022686004638672,
-        "agent_output": "",
+        "execution_time": 16.023899793624878,
+        "agent_output": "484228009 を因数分解すると、以下のようになります。\n\n7,13,23,43,47,53",
         "expected_answer": "15077,32117",
-        "input_tokens": null,
-        "output_tokens": null,
-        "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'The model is overloaded. Please try again later.', 'status': 'UNAVAILABLE'}}"
+        "input_tokens": 80,
+        "output_tokens": 36,
+        "error": null
       }
     },
     "task_005": {
@@ -91,8 +91,8 @@
   "summary": {
     "total": 5,
     "correct": 2,
-    "incorrect": 2,
-    "errors": 1
+    "incorrect": 3,
+    "errors": 0
   },
-  "last_updated": "2025-11-15 01:26:19"
+  "last_updated": "2025-11-15 01:50:08"
 }
