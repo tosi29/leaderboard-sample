@@ -1,10 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Agent Benchmark Leaderboard</title>
     <style>
+        :root {
+            --primary-color: #3b82f6;
+            --primary-dark: #2563eb;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --border-color: #e2e8f0;
+            --success-bg: #dcfce7;
+            --success-text: #166534;
+            --error-bg: #fee2e2;
+            --error-text: #991b1b;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -12,316 +30,369 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont,
-                'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
-                sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 2rem;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-            overflow: hidden;
+            padding: 2rem 1rem;
         }
 
+        /* Header Section */
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 2rem;
             text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem 0;
         }
 
         .header h1 {
             font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #1e293b 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             margin-bottom: 0.5rem;
+            letter-spacing: -0.025em;
         }
 
         .header p {
-            opacity: 0.9;
-            font-size: 1.1rem;
-        }
-
-        .content {
-            padding: 2rem;
+            color: var(--text-secondary);
+            font-size: 1.125rem;
         }
 
         .timestamp {
-            text-align: center;
-            color: #666;
-            margin-bottom: 2rem;
-            font-size: 0.9rem;
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.25rem 0.75rem;
+            background-color: #e2e8f0;
+            color: var(--text-secondary);
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
         }
 
-        .leaderboard {
-            margin-bottom: 3rem;
-        }
-
-        .leaderboard h2 {
-            color: #333;
+        /* Leaderboard Section */
+        .leaderboard-title {
+            font-size: 1.5rem;
+            font-weight: 700;
             margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 3px solid #667eea;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .leaderboard-title::before {
+            content: '';
+            display: block;
+            width: 4px;
+            height: 24px;
+            background-color: var(--primary-color);
+            border-radius: 2px;
         }
 
         .agent-card {
-            background: #f8f9fa;
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            border-left: 4px solid #667eea;
-            transition: transform 0.2s, box-shadow 0.2s;
+            background: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 2rem;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
         .agent-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow-lg);
         }
 
         .agent-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1rem;
+            background: linear-gradient(to right, #ffffff, #f8fafc);
         }
 
-        .agent-name {
-            font-size: 1.4rem;
-            font-weight: 600;
-            color: #333;
+        .agent-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
 
         .rank-badge {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: 700;
+            font-size: 1.125rem;
             color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .rank-1 {
+            background: linear-gradient(135deg, #FFD700 0%, #FDB931 100%);
+        }
+
+        .rank-2 {
+            background: linear-gradient(135deg, #94a3b8 0%, #cbd5e1 100%);
+        }
+
+        .rank-3 {
+            background: linear-gradient(135deg, #CD7F32 0%, #A0522D 100%);
+        }
+
+        .rank-other {
+            background-color: var(--text-secondary);
+        }
+
+        .agent-name {
+            font-size: 1.25rem;
             font-weight: 600;
-            font-size: 0.9rem;
+            color: var(--text-primary);
         }
 
-        .rank-badge.rank-1 {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-        }
-
-        .rank-badge.rank-2 {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-        }
-
-        .rank-badge.rank-3 {
-            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-        }
-
-        .metrics {
+        /* Metrics Grid */
+        .metrics-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1px;
+            background-color: var(--border-color);
+            border-bottom: 1px solid var(--border-color);
         }
 
-        .metric {
-            background: white;
-            padding: 1rem;
-            border-radius: 6px;
+        .metric-item {
+            background-color: var(--card-bg);
+            padding: 1.5rem;
             text-align: center;
         }
 
         .metric-label {
-            font-size: 0.85rem;
-            color: #666;
-            margin-bottom: 0.25rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
         }
 
         .metric-value {
             font-size: 1.5rem;
             font-weight: 700;
-            color: #333;
+            color: var(--text-primary);
         }
 
-        .metric-value.accuracy {
-            color: #667eea;
+        .metric-value.highlight {
+            color: var(--primary-color);
         }
 
-        .metric-value.correct {
-            color: #43e97b;
+        .metric-value.success {
+            color: var(--success-text);
         }
 
-        .metric-value.incorrect {
-            color: #f5576c;
+        /* Task Table */
+        .task-section {
+            padding: 1.5rem;
+            background-color: #fcfcfc;
         }
 
-        .metric-value.tokens {
-            color: #ffb347;
-        }
-
-        .task-details {
-            margin-top: 2rem;
-        }
-
-        .task-details h3 {
-            color: #333;
+        .task-section h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-secondary);
             margin-bottom: 1rem;
-            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
-        .task-table {
+        .table-container {
+            overflow-x: auto;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        table {
             width: 100%;
             border-collapse: collapse;
-            background: white;
-            border-radius: 6px;
-            overflow: hidden;
+            font-size: 0.9375rem;
+            background-color: white;
         }
 
-        .task-table th {
-            background: #667eea;
-            color: white;
-            padding: 0.75rem;
-            text-align: left;
+        th {
+            background-color: #f1f5f9;
+            color: var(--text-secondary);
             font-weight: 600;
+            text-align: left;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+            white-space: nowrap;
         }
 
-        .task-table td {
-            padding: 0.75rem;
-            border-bottom: 1px solid #eee;
+        td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-primary);
         }
 
-        .task-table tr:last-child td {
+        tr:last-child td {
             border-bottom: none;
         }
 
         .status-badge {
+            display: inline-flex;
+            align-items: center;
             padding: 0.25rem 0.75rem;
-            border-radius: 12px;
-            font-size: 0.85rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
             font-weight: 600;
-            display: inline-block;
+            text-transform: uppercase;
         }
 
         .status-correct {
-            background: #d4f4dd;
-            color: #1e7e34;
+            background-color: var(--success-bg);
+            color: var(--success-text);
         }
 
         .status-incorrect {
-            background: #f8d7da;
-            color: #721c24;
+            background-color: var(--error-bg);
+            color: var(--error-text);
         }
 
         .footer {
             text-align: center;
-            padding: 2rem;
-            color: #666;
-            border-top: 1px solid #eee;
-            font-size: 0.9rem;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
         }
 
         .no-data {
             text-align: center;
-            padding: 3rem;
-            color: #999;
+            padding: 4rem 2rem;
+            background: white;
+            border-radius: 16px;
+            border: 1px dashed var(--border-color);
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 640px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .agent-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .metrics-grid {
+                grid-template-columns: 1fr 1fr;
+            }
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="header">
-            <h1>AI Agent Benchmark Leaderboard</h1>
-            <p>Performance evaluation and comparison</p>
+            <h1>AI Agent Benchmark</h1>
+            <p>Performance Evaluation Leaderboard</p>
+            <div class="timestamp">
+                Updated: {{ timestamp }}
+            </div>
         </div>
 
-        <div class="content">
-            <div class="timestamp">
-                Last updated: {{ timestamp }}
-            </div>
+        <div class="leaderboard-section">
+            <div class="leaderboard-title">Top Performers</div>
 
-            <div class="leaderboard">
-                <h2>Leaderboard Rankings</h2>
-
-                {% if agents %}
-                    {% for agent in agents %}
-                    <div class="agent-card">
-                        <div class="agent-header">
-                            <div class="agent-name">{{ agent.name }}</div>
-                            <div class="rank-badge rank-{{ agent.rank }}">
-                                Rank #{{ agent.rank }}
-                            </div>
+            {% if agents %}
+            {% for agent in agents %}
+            <div class="agent-card">
+                <div class="agent-header">
+                    <div class="agent-info">
+                        <div class="rank-badge rank-{{ agent.rank if agent.rank <= 3 else 'other' }}">
+                            {{ agent.rank }}
                         </div>
-
-                        <div class="metrics">
-                            <div class="metric">
-                                <div class="metric-label">Accuracy</div>
-                                <div class="metric-value accuracy">
-                                    {{ "%.1f"|format(agent.accuracy) }}%
-                                </div>
-                            </div>
-                            <div class="metric">
-                                <div class="metric-label">Average Time</div>
-                                <div class="metric-value">
-                                    {{ "%.2f"|format(agent.average_time) }}s
-                                </div>
-                            </div>
-                            <div class="metric">
-                                <div class="metric-label">Avg Input Tokens</div>
-                                <div class="metric-value tokens">
-                                    {{ "%.1f"|format(agent.average_input_tokens) }}
-                                </div>
-                            </div>
-                            <div class="metric">
-                                <div class="metric-label">Avg Output Tokens</div>
-                                <div class="metric-value tokens">
-                                    {{ "%.1f"|format(agent.average_output_tokens) }}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="task-details">
-                            <h3>Task Results</h3>
-                            <table class="task-table">
-                                <thead>
-                                    <tr>
-                                        <th>Task</th>
-                                        <th>Status</th>
-                                        <th>Time (s)</th>
-                                        <th>Input Tokens</th>
-                                        <th>Output Tokens</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for task in agent.tasks %}
-                                    <tr>
-                                        <td>{{ task.name }}</td>
-                                        <td>
-                                            <span class="status-badge status-{{
-                                                'correct' if task.correct else 'incorrect'
-                                            }}">
-                                                {{ 'CORRECT' if task.correct else 'INCORRECT' }}
-                                            </span>
-                                        </td>
-                                        <td>{{ "%.2f"|format(task.execution_time) }}</td>
-                                        <td>{{ task.input_tokens if task.input_tokens is not none else "—" }}</td>
-                                        <td>{{ task.output_tokens if task.output_tokens is not none else "—" }}</td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
+                        <div class="agent-name">{{ agent.name }}</div>
                     </div>
-                    {% endfor %}
-                {% else %}
-                    <div class="no-data">
-                        No benchmark results available yet. Run the benchmarks to generate data.
+                </div>
+
+                <div class="metrics-grid">
+                    <div class="metric-item">
+                        <div class="metric-label">Accuracy</div>
+                        <div class="metric-value highlight">{{ "%.1f"|format(agent.accuracy) }}%</div>
                     </div>
-                {% endif %}
+                    <div class="metric-item">
+                        <div class="metric-label">Avg Time</div>
+                        <div class="metric-value">{{ "%.2f"|format(agent.average_time) }}s</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-label">Avg Input Tokens</div>
+                        <div class="metric-value">{{ "%.0f"|format(agent.average_input_tokens) }}</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-label">Avg Output Tokens</div>
+                        <div class="metric-value">{{ "%.0f"|format(agent.average_output_tokens) }}</div>
+                    </div>
+                </div>
+
+                <div class="task-section">
+                    <h3>Detailed Task Results</h3>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Task Name</th>
+                                    <th>Status</th>
+                                    <th>Time (s)</th>
+                                    <th>Input Tokens</th>
+                                    <th>Output Tokens</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for task in agent.tasks %}
+                                <tr>
+                                    <td>{{ task.name }}</td>
+                                    <td>
+                                        <span
+                                            class="status-badge status-{{ 'correct' if task.correct else 'incorrect' }}">
+                                            {{ 'Pass' if task.correct else 'Fail' }}
+                                        </span>
+                                    </td>
+                                    <td>{{ "%.2f"|format(task.execution_time) }}</td>
+                                    <td>{{ task.input_tokens if task.input_tokens is not none else "—" }}</td>
+                                    <td>{{ task.output_tokens if task.output_tokens is not none else "—" }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
+            {% endfor %}
+            {% else %}
+            <div class="no-data">
+                <p>No benchmark results available yet.</p>
+                <p>Run the benchmarks to generate data.</p>
+            </div>
+            {% endif %}
         </div>
 
         <div class="footer">
-            Generated by AI Agent Benchmark System
+            <p>Generated by AI Agent Benchmark System</p>
         </div>
     </div>
 </body>
+
 </html>
